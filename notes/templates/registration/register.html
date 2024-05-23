@@ -1,0 +1,150 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация - Adventure Tracker</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .slideshow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .slideshow img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      animation: fadeEffect 35s infinite;
+      opacity: 0;
+    }
+
+    .slideshow img:nth-child(1) { animation-delay: 0s; }
+    .slideshow img:nth-child(2) { animation-delay: 10s; }
+    .slideshow img:nth-child(3) { animation-delay: 20s; }
+    .slideshow img:nth-child(4) { animation-delay: 30s; }
+
+    @keyframes fadeEffect {
+      0%    { opacity: 0; }
+      25%   { opacity: 1; }
+      50%   { opacity: 1; }
+      75%   { opacity: 0; }
+      100%  { opacity: 0; }
+    }
+
+    .centered-content {
+      margin-top: 10%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.85);  
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .form-container {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .file-input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .file-name {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .file-input-container .custom-file {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .custom-file-label {
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow">
+    <img src="{% static 'background_images/photo1.jpg' %}" alt="Image 1">
+    <img src="{% static 'background_images/photo2.jpg' %}" alt="Image 2">
+    <img src="{% static 'background_images/photo3.jpg' %}" alt="Image 3">
+    <img src="{% static 'background_images/photo4.jpg' %}" alt="Image 4">
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center centered-content">
+        <h1 class="display-4">Регистрация</h1>
+        <div class="form-container mt-4">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="username">Имя пользователя</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Электронная почта</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Пароль</label>
+              <input type="password" class="form-control" id="password1" name="password1" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Повторите пароль</label>
+              <input type="password" class="form-control" id="password2" name="password2" required>
+            </div>
+            <div class="form-group file-input-container">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="profile_image" name="profile_image" required>
+                  <label class="custom-file-label text-center" for="profile_picture">Выберите фото профиля</label>
+                </div>
+                <small id="fileName" class="form-text text-muted file-info file-name"></small>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg btn-block">Зарегистрироваться</button>
+            {{ form.errors }}
+          </form>
+        </div>
+        <p class="mt-4">Уже есть аккаунт? <a href="{% url 'notes:login' %}">Войти</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#profile_picture').on('change', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+        $('#fileName').text(fileName);
+      });
+    });
+  </script>
+</body>
+</html>

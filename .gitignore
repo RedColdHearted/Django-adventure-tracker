@@ -1,0 +1,7 @@
+.idea
+.env
+db.sqlite3
+
+notes/migrations
+users/migrations
+media/profile_images/

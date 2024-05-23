@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Tracker</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="note.js" defer></script>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col text-center position-relative">
+                <img src="https://via.placeholder.com/150" class="rounded-circle" alt="Profile Picture">
+                <h2> Привет {{ user.username }}!</h2>
+                <!-- Red Exit Button -->
+                <button onclick="location.href='{% url "logout" %}?next=/notes/home'" class="btn btn-danger position-absolute" style="top: 0; right: 0;">Выйти</button>
+            </div>
+        </div>
+        <div id="main-content" class="text-center">
+            <p>У вас нет ни одного воспоминания</p>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMemoryModal">Добавить воспоминание</button>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="addMemoryModal" tabindex="-1" role="dialog" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMemoryModalLabel">Добавить воспоминание</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addMemoryForm">
+                    <div class="form-group">
+                        <label for="memoryTitle">Название</label>
+                        <input type="text" class="form-control" id="memoryTitle" placeholder="Введите название">
+                    </div>
+                    <div class="form-group">
+                        <label for="memoryDescription">Комментарий</label>
+                        <textarea class="form-control" id="memoryDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="memoryLocation">Местоположение</label>
+                        <input type="text" class="form-control" id="memoryLocation" placeholder="Введите местоположение">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" id="saveMemoryButton">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template for memory item -->
+<div class="container mt-5 d-none" id="memoryTemplate">
+    <div class="row my-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title memory-title"></h5>
+                    <p class="card-text memory-description"></p>
+                    <a href="#" class="btn btn-primary edit-memory-button" data-toggle="modal" data-target="#editMemoryModal">Изменить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editMemoryModal" tabindex="-1" role="dialog" aria-labelledby="editMemoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMemoryModalLabel">Изменить воспоминание</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editMemoryForm">
+                    <input type="hidden" id="editMemoryId">
+                    <div class="form-group">
+                        <label for="editMemoryTitle">Название</label>
+                        <input type="text" class="form-control" id="editMemoryTitle" placeholder="Введите название">
+                    </div>
+                    <div class="form-group">
+                        <label for="editMemoryDescription">Комментарий</label>
+                        <textarea class="form-control" id="editMemoryDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editMemoryLocation">Местоположение</label>
+                        <input type="text" class="form-control" id="editMemoryLocation" placeholder="Введите местоположение">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" id="updateMemoryButton">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
