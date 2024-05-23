@@ -20,10 +20,6 @@ def redirect_to_home_view(request):
 def home_page_view(request):
     return render(request, 'notes/home_page.html')
 
-
-# def login_page_view(request):
-#     return render(request, 'registration/login.html')
-
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'  # Укажите имя вашего шаблона
     redirect_authenticated_user = True
