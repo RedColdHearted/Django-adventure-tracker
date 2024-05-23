@@ -119,4 +119,4 @@ MEDIA_URL = '/media/'
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = reverse_lazy("notes:profile")
+LOGIN_REDIRECT_URL = reverse_lazy("notes:login")

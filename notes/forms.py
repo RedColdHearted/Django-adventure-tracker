@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
+from .models import Note
 from users.models import User
+
 
 
 class RegisterForm(UserCreationForm):
@@ -17,3 +19,9 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'description', 'location', 'date', 'user']
