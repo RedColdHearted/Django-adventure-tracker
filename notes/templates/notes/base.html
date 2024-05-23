@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block title %} {% endblock %}
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  {% block icon %} {% endblock %}
+    
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .slideshow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .slideshow img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      animation: fadeEffect 35s infinite;
+      opacity: 0;
+    }
+
+    .slideshow img:nth-child(1) { animation-delay: 0s; }
+    .slideshow img:nth-child(2) { animation-delay: 10s; }
+    .slideshow img:nth-child(3) { animation-delay: 20s; }
+    .slideshow img:nth-child(4) { animation-delay: 30s; }
+
+    @keyframes fadeEffect {
+      0%    { opacity: 0; }
+      25%   { opacity: 1; }
+      50%   { opacity: 1; }
+      75%   { opacity: 0; }
+      100%  { opacity: 0; }
+    }
+
+    .centered-content {
+      margin-top: 10%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.85);  
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1;
+    }
+  </style>
+{% block style %} {% endblock %}
+</head>
+<body>
+  <div class="slideshow">
+    <img src="{% static 'background_images/photo1.jpg' %}" alt="Image 1">
+    <img src="{% static 'background_images/photo2.jpg' %}" alt="Image 2">
+    <img src="{% static 'background_images/photo3.jpg' %}" alt="Image 3">
+    <img src="{% static 'background_images/photo4.jpg' %}" alt="Image 4">
+  </div>
+
+  {% block content %} {% endblock %}
+  
+  {% block script %} {% endblock %}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
