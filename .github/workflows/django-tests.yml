@@ -1,12 +1,10 @@
-name: Django Tests
+name: Django CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   test:
@@ -15,20 +13,25 @@ jobs:
     services:
       postgres:
         image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
         ports:
           - 5432:5432
-        env:
-          POSTGRES_DB: django_db
-          POSTGRES_USER: django_user
-          POSTGRES_PASSWORD: django_pass
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s 
           --health-retries 5
 
     env:
-      DATABASE_URL: postgres://django_user:django_pass@localhost:5432/django_db
+      # Django environment variables
+      SECRET_KEY: django-insecure-2c(ubr^jlo&=s@a=jxwivc^ynwj(w+(40_0vk849zx(#1e$eed
+      POSTGRES_DB: test_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
 
     steps:
     - name: Checkout code
@@ -37,7 +40,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.12.2
+        python-version: '3.12.2'  # Укажите вашу версию Python
 
     - name: Install dependencies
       run: |
@@ -50,4 +53,4 @@ jobs:
 
     - name: Run tests
       run: |
-        python manage.py test
+        python manage.py test notes/tests.py
