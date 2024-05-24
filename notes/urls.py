@@ -19,5 +19,5 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/create-note/', NoteCreateView.as_view(), name='create-note'),
-    path('profile/create-note/', NoteUpdateView.as_view(), name='update-note')
+    path('profile/update-note/<uuid:uuid>', NoteUpdateView.as_view(), name='update-note')
 ]

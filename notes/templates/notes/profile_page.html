@@ -31,7 +31,9 @@
 </div>
         <div id="main-content" class="text-center">
         <div>
+            {% if notes %}
             <a href="{% url 'notes:create-note' %}" class="btn btn-primary" style="z-index: 4;">Добавить воспоминание</a>
+            {% endif %}
             <a href="{% url 'logout' %}?next=/" class="btn btn-danger position-absolute" style="top: 25%; right: 20%;">Выйти</a>
         </div>
         {% if notes %}
@@ -47,7 +49,7 @@
                                     <p class="card-text memory-address"><strong>Address:</strong> {{ note.location }}</p>
                                     <p class="card-text memory-date"><strong>Date:</strong> {{ note.date }}</p>
                                     <p class="card-text memory-id" style="font-size: 11px; color: #BDBDBD"><strong>ID:</strong> {{ note.id }}</p>
-                                    <a href="#" class="btn btn-primary edit-memory-button" data-toggle="modal" data-target="#editMemoryModal">Изменить</a>
+                                    <a href="{% url 'notes:update-note' note.id %}" class="btn btn-primary edit-memory-button">Изменить</a>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +59,7 @@
         {% else %}
             <div style="margin-top: 100px">
                 <p>У вас нет ни одного воспоминания.</p>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#addMemoryModal">Добавить воспоминание</button>
+                <a href="{% url 'notes:create-note' %}" class="btn btn-primary" style="z-index: 4;">Добавить воспоминание</a>
             </div>
         {% endif %}
     </div>

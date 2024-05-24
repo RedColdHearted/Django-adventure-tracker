@@ -19,26 +19,29 @@
                 <h5 class="modal-title" id="editMemoryModalLabel">Изменить воспоминание</h5>
             </div>
             <div class="modal-body">
-                <form id="editMemoryForm">
-                    <input type="hidden" id="editMemoryId">
+                <form id="editMemoryForm" method="POST">
+                    {% csrf_token %}
                     <div class="form-group">
-                        <label for="editMemoryTitle">Название</label>
-                        <input type="text" class="form-control" id="editMemoryTitle" placeholder="Введите название">
+                        <label for="memoryTitle">Название</label>
+                        <input type="text" name="title" class="form-control" id="memoryTitle" placeholder="Введите название">
                     </div>
                     <div class="form-group">
-                        <label for="editMemoryLocation">Местоположение</label>
-                        <input type="text" class="form-control" id="editMemoryLocation" placeholder="Введите местоположение">
+                        <label for="memoryLocation">Местоположение</label>
+                        <input type="text" name="location" class="form-control" id="memoryLocation" placeholder="Введите местоположение">
                     </div>
                     <div class="form-group">
-                        <label for="editMemoryDescription">Комментарий</label>
-                        <textarea class="form-control" id="editMemoryDescription" rows="3"></textarea>
+                        <label for="memoryDescription">Комментарий</label>
+                        <textarea class="form-control" name="description" id="memoryDescription" rows="3"></textarea>
                     </div>
+                    
+                    <div class="modal-footer">
+                        <a href="{% url 'notes:profile' user.id %}"  type="button" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-primary" id="saveMemoryButton">Сохранить</button>
+                    </div>
+                    {{ form.errors }}
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-primary" id="updateMemoryButton">Сохранить изменения</button>
-            </div>
+            
         </div>
     </div>
 </div>

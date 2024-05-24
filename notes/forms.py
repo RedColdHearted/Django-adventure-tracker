@@ -21,7 +21,12 @@ class RegisterForm(UserCreationForm):
         return user
 
 
-class NoteForm(forms.ModelForm):
+class NoteCreateForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ['title', 'description', 'location', 'date']
+
+class NoteUpdtateForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'description', 'location']

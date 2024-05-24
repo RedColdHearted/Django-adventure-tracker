@@ -5,13 +5,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, FormView, DetailView
+from django.views.generic import CreateView, FormView, DetailView, UpdateView
 
 from notes.forms import RegisterForm
 from users.models import User
 
 from .models import Note
-from .forms import NoteForm
+from .forms import NoteCreateForm, NoteUpdtateForm
 
 def redirect_to_home_view(request):
     return redirect('notes:home')
@@ -61,8 +61,8 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 #note page views
 class NoteCreateView(FormView):
     template_name = 'notes/create_form.html'
-    form_class = NoteForm
-    success_url = reverse_lazy('notes:profile')  # Перенаправление после успешного создания записи
+    form_class = NoteCreateForm
+    success_url = reverse_lazy('notes:login')  # Перенаправление после успешного создания записи
 
     def form_valid(self, form):
         note = form.save(commit=False)
@@ -70,21 +70,17 @@ class NoteCreateView(FormView):
         note.save()
         return super().form_valid(form)
 
-class NoteUpdateView(FormView):
+
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
+    model = Note
+    form_class = NoteUpdtateForm
     template_name = 'notes/edit_form.html'
-    form_class = NoteForm
-    success_url = reverse_lazy('notes:profile')  # Перенаправление после успешного обновления записи
+    success_url = reverse_lazy('notes:login')
+    pk_url_kwarg = 'uuid'  # Указываем, что будем использовать 'uuid' для идентификации
 
-    def get_form(self, form_class=None):
-        if form_class is None:
-            form_class = self.get_form_class()
-        return form_class(instance=get_object_or_404(Note, id=self.kwargs['pk']))
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['note'] = get_object_or_404(Note, id=self.kwargs['pk'])
-        return context
+    def get_queryset(self):
+        """
+        Ограничение прав доступа к редактированию заметки только её создателю.
+        """
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
