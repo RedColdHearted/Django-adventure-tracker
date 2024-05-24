@@ -1,8 +1,13 @@
 [flake8]
-  max-line-length = 120
+  max-line-length = 10
   exclude =
       .git,
       __pycache__,
       old,
       build,
       dist
+  ignore =
+    E265,  # Block comment should start with '# '
+    E301,  # Expected 1 blank line, found 0
+    E302,  # Expected 2 blank lines, found 1
+    F403,  # 'from <module> import *' used; unable to detect undefined names

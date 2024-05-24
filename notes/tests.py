@@ -24,9 +24,16 @@ class UserTestCases(TestCase):
     def setUp(self):
         self.client = Client()
         self.login_url = 'notes:login'
-        self.user1 = User.objects.create_user(username='testuser1', password='password')
-        self.user2 = User.objects.create_user(username='testuser2', password='password')
-        self.profile_url = reverse('notes:profile', kwargs={'pk': self.user1.pk})
+        self.user1 = User.objects.create_user(
+            username='testuser1', password='password'
+        )
+        self.user2 = User.objects.create_user(
+            username='testuser2', password='password'
+        )
+        self.profile_url = reverse(
+                         'notes:profile',
+                                   kwargs={'pk': self.user1.pk}
+                                   )
     def test_view_accessible_if_logged_in(self):
         self.client.login(username='testuser1', password='password')
         response = self.client.get(self.profile_url)
@@ -36,8 +43,14 @@ class UserTestCases(TestCase):
         #test 1
         self.client.login(username=self.user1.username, password='password')
 
-        self.user1_note = Note.objects.create(title='test1', location='[50, 50]', description='test1', user=self.user1)
-        self.user2_note = Note.objects.create(title='some title', location='[50, 50]', description='some description', user=self.user2)
+        self.user1_note = Note.objects.create(title='test1',
+                                              location='[50, 50]',
+                                              description='test1',
+                                              user=self.user1)
+        self.user2_note = Note.objects.create(title='some title',
+                                              location='[50, 50]',
+                                              description='some description',
+                                              user=self.user2)
 
         update_url_user2_note = reverse('notes:update-note', kwargs={'uuid': self.user2_note.pk})
         response = self.client.get(update_url_user2_note)
