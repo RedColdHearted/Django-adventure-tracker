@@ -26,6 +26,8 @@ class NoteCreateForm(forms.ModelForm):
         fields = ['title', 'description', 'location', 'date']
 
 class NoteUpdtateForm(forms.ModelForm):
+    location = forms.CharField(widget=forms.HiddenInput())
+
     class Meta:
         model = Note
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'location']
