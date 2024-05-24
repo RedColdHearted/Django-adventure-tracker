@@ -7,7 +7,7 @@
       build,
       dist
   ignore =
-    E265,  # Block comment should start with '# '
-    E301,  # Expected 1 blank line, found 0
-    E302,  # Expected 2 blank lines, found 1
-    F403,  # 'from <module> import *' used; unable to detect undefined names
+    E265,
+    E301,
+    E302,
+    F403,
