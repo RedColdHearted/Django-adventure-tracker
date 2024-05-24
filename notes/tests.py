@@ -30,7 +30,7 @@ class UserTestCases(TestCase):
         self.user2 = User.objects.create_user(
             username='testuser2', password='password'
         )
-        self.profile_url = reverse('notes:profile',kwargs={'pk': self.user1.pk})
+        self.profile_url = reverse('notes:profile', kwargs={'pk': self.user1.pk})
     def test_view_accessible_if_logged_in(self):
         self.client.login(username='testuser1', password='password')
         response = self.client.get(self.profile_url)
