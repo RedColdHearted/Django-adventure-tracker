@@ -22,6 +22,8 @@ class RegisterForm(UserCreationForm):
 
 
 class NoteCreateForm(forms.ModelForm):
+    location = forms.CharField(widget=forms.HiddenInput())  # Добавляем скрытое поле
+
     class Meta:
         model = Note
         fields = ['title', 'description', 'location', 'date']
@@ -29,4 +31,4 @@ class NoteCreateForm(forms.ModelForm):
 class NoteUpdtateForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['title', 'description', 'location']
+        fields = ['title', 'description']

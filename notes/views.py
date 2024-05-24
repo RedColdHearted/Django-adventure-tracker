@@ -24,7 +24,7 @@ def register_page_view(request):
 
 @login_required
 def profile_page_view(request):
-    return render(request, 'notes/profile_page.html')
+    return render(request, 'notes/profile/profile_page.html')
 
 
 class CustomLoginView(LoginView):
@@ -32,7 +32,6 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
     def get_success_url(self):
         user = self.request.user
-        print(user.pk)
         return reverse('notes:profile', kwargs={'pk': user.pk})
 
 class RegisterView(FormView):
@@ -49,20 +48,26 @@ class RegisterView(FormView):
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = 'notes/profile_page.html'
+    template_name = 'notes/profile/profile_page.html'
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context['notes'] = Note.objects.filter(user=user)
+        for i in range(len(context['notes'])):
+            x, y = context['notes'][i].location.split(',')
+            x, y = float(x.lstrip('[')), float(y.rstrip(']'))
+            context['notes'][i].x = x
+            context['notes'][i].y = y
+            context['notes'][i].hash = hash((x, y)) % 1000
         return context
 
 #note page views
 class NoteCreateView(FormView):
     template_name = 'notes/forms/create_form.html'
     form_class = NoteCreateForm
-    success_url = reverse_lazy('notes:login')  # Перенаправление после успешного создания записи
+    success_url = reverse_lazy('notes:login')  # Измените на нужный URL после создания записки
 
     def form_valid(self, form):
         note = form.save(commit=False)
