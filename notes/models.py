@@ -2,7 +2,6 @@ import datetime
 import uuid
 
 from django.db import models
-from django.contrib.postgres.fields import JSONField  # или используйте models.JSONField для Django 3.1+
 
 from users.models import User
 

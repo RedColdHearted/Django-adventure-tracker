@@ -1,11 +1,9 @@
-import functools
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, FormView, DetailView, UpdateView
+from django.views.generic import FormView, DetailView, UpdateView
 
 from notes.forms import RegisterForm
 from users.models import User
@@ -26,9 +24,8 @@ def register_page_view(request):
 def profile_page_view(request):
     return render(request, 'notes/profile/profile_page.html')
 
-
 class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'  # Укажите имя вашего шаблона
+    template_name = 'registration/login.html'
     redirect_authenticated_user = True
     def get_success_url(self):
         user = self.request.user
@@ -44,7 +41,6 @@ class RegisterView(FormView):
         user.profile_image = self.request.FILES.get('profile_image')
         user.save()
         return super().form_valid(form)
-
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
@@ -67,7 +63,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 class NoteCreateView(FormView):
     template_name = 'notes/forms/create_form.html'
     form_class = NoteCreateForm
-    success_url = reverse_lazy('notes:login')  # Измените на нужный URL после создания записки
+    success_url = reverse_lazy('notes:login')
 
     def form_valid(self, form):
         note = form.save(commit=False)
@@ -81,7 +77,7 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
     form_class = NoteUpdtateForm
     template_name = 'notes/forms/edit_form.html'
     success_url = reverse_lazy('notes:login')
-    pk_url_kwarg = 'uuid'  # Указываем, что будем использовать 'uuid' для идентификации
+    pk_url_kwarg = 'uuid'
 
     def get_queryset(self):
         """

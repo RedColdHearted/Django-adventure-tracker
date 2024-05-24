@@ -4,8 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Note
 from users.models import User
 
-
-
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
@@ -20,9 +18,8 @@ class RegisterForm(UserCreationForm):
             user.save()
         return user
 
-
 class NoteCreateForm(forms.ModelForm):
-    location = forms.CharField(widget=forms.HiddenInput())  # Добавляем скрытое поле
+    location = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Note
