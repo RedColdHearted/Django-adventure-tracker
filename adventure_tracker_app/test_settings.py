@@ -1,5 +1,5 @@
 import os
-from .settings import *  # импортируйте все настройки из основного файла settings.py
+from .settings import *  # noqa: F401
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key-for-testing')
 
 DATABASES = {
