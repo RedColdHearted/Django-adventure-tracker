@@ -32,7 +32,7 @@ jobs:
 
     - name: Run migrations
       run: |
-        python manage.py migrate --settings=myapp.test_settings
+        python manage.py migrate --settings=adventure_tracker_app.test_settings
 
     - name: Run tests
       run: |
