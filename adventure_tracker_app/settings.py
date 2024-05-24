@@ -1,27 +1,22 @@
-import environ
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 from django.urls import reverse_lazy
 
-
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(
-       DEBUG=(bool, False),
-       SECRET_KEY=(str, 'unsafe-secret-key'),
-   )
 
-env_file = BASE_DIR / '.env'
-if env_file.exists():
-    environ.Env.read_env(env_file)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG')
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -73,14 +68,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'adventure_tracker_app.wsgi.application'
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
+        'OPTIONS': {
+            'options': '-c client_encoding=utf8'
+        }
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
