@@ -3,44 +3,4 @@
 
 {% block title %}<title>Добавление Воспоминания</title>{% endblock %}
 
-{% block map_script %}
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
-{% endblock %}
-
 {% block content_name %}<h5 class="modal-title">Добавьте Воспоминание</h5>{% endblock %}
-{% block location %} {{ form.location }} {% endblock %}
-
-{% block map %}
-<div id="map" style="width: 400px; height: 400px"></div>
-<script>
-    ymaps.ready(init);
-
-    function init () {
-        var myMap = new ymaps.Map("map", {
-            center: [55.76, 37.64],  // Москва
-            zoom: 10
-        }),
-
-        singlePlacemark;
-
-        myMap.events.add('click', function (e) {
-            var coords = e.get('coords');
-
-            // Если метка уже существует, удаляем её
-            if (singlePlacemark) {
-                myMap.geoObjects.remove(singlePlacemark);
-            }
-
-            // Создаем и добавляем новую метку
-            singlePlacemark = new ymaps.Placemark(coords, {}, {
-                preset: 'islands#redDotIcon'
-            });
-
-            myMap.geoObjects.add(singlePlacemark);
-
-            // Сохраняем координаты в скрытое поле формы
-            document.querySelector('input[name="location"]').value = JSON.stringify(coords);
-        });
-    }
-</script>
-{% endblock %}

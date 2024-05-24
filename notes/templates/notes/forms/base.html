@@ -11,7 +11,7 @@
     {% block title %} {% endblock %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="{% static 'notes/favicon.ico' %}" type="image/x-icon">
-    {% block map_script %} {% endblock %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
 </head>
 
 <div class="container" id="addMemoryModal" aria-labelledby="addMemoryModalLabel">
@@ -23,13 +23,47 @@
             <div class="modal-body">
                 <form method="POST">
                     {% csrf_token %}
-                    {% block location %} {% endblock %}
+                    {{ form.location }}
                       <!-- Добавить скрытое поле сюда -->
                     <div class="form-group">
                         <label for="memoryTitle">Название</label>
                         <input type="text" name="title" class="form-control" id="memoryTitle" placeholder="Введите название">
                     </div>
-                    {% block map %} {% endblock %}
+                    {% block map %} 
+                    <div id="map" style="width: 400px; height: 400px"></div>
+                    <script>
+                        ymaps.ready(init);
+                    
+                        function init () {
+                            var myMap = new ymaps.Map("map", {
+                                center: [55.76, 37.64],  // Москва
+                                zoom: 10
+                            }),
+                    
+                            singlePlacemark;
+                    
+                            myMap.events.add('click', function (e) {
+                                var coords = e.get('coords');
+                    
+                                // Если метка уже существует, удаляем её
+                                if (singlePlacemark) {
+                                    myMap.geoObjects.remove(singlePlacemark);
+                                }
+                    
+                                // Создаем и добавляем новую метку
+                                singlePlacemark = new ymaps.Placemark(coords, {}, {
+                                    preset: 'islands#redDotIcon'
+                                });
+                    
+                                myMap.geoObjects.add(singlePlacemark);
+                    
+                                // Сохраняем координаты в скрытое поле формы
+                                document.querySelector('input[name="location"]').value = JSON.stringify(coords);
+                            });
+                        }
+                    </script>
+                    
+                    {% endblock %}
                     <div class="form-group">
                         <label for="memoryDescription">Комментарий</label>
                         <textarea class="form-control" name="description" id="memoryDescription" rows="3"></textarea>
