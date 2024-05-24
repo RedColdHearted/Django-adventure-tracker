@@ -60,7 +60,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
 #note page views
 class NoteCreateView(FormView):
-    template_name = 'notes/create_form.html'
+    template_name = 'notes/forms/create_form.html'
     form_class = NoteCreateForm
     success_url = reverse_lazy('notes:login')  # Перенаправление после успешного создания записи
 
@@ -74,7 +74,7 @@ class NoteCreateView(FormView):
 class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Note
     form_class = NoteUpdtateForm
-    template_name = 'notes/edit_form.html'
+    template_name = 'notes/forms/edit_form.html'
     success_url = reverse_lazy('notes:login')
     pk_url_kwarg = 'uuid'  # Указываем, что будем использовать 'uuid' для идентификации
 

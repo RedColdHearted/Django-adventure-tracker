@@ -1,12 +1,14 @@
 {% load static %}
 
+{% load static %}
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adventure Tracker</title>
+    {% block title %} {% endblock %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="{% static 'notes/favicon.ico' %}" type="image/x-icon">
 </head>
@@ -15,7 +17,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addMemoryModalLabel">Добавить воспоминание</h5>
+                {% block content_name %} {% endblock %}
             </div>
             <div class="modal-body">
                 <form method="POST" id="addMemoryForm">
