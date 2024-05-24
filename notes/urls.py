@@ -18,6 +18,6 @@ urlpatterns = [
     # path('login/', login_page_view, name='login'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
-    path('create-note/<str:pk>', NoteCreateView.as_view(), name='create-note'),
-    path('create-note/<str:pk>', NoteUpdateView.as_view(), name='update-note')
+    path('profile/create-note/', NoteCreateView.as_view(), name='create-note'),
+    path('profile/create-note/', NoteUpdateView.as_view(), name='update-note')
 ]

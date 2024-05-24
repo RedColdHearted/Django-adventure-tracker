@@ -8,54 +8,59 @@
     <title>Adventure Tracker</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="{% static 'notes/favicon.ico' %}" type="image/x-icon">
+    <style>
+        .card {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row mb-4">
-            <div class="col text-center" style="max-height: 320px; margin-bottom: -160px; z-index: -1;" >
-                {% if user.profile_image %}
-                    {#<p>Profile image: {{ user.profile_image.url }}</p>#}
-                    <img src="{{user.profile_image.url}}" class="rounded-circle" style="max-width: 150px; max-height: 150px" alt="не работает">
-                {% else %}
-{#                    <img src="https://via.placeholder.com/150" class="rounded-circle" alt="Profile Picture">#}
-                      <img src="https://dummyimage.com/300.png/20f/fff&text={{ user.username }}" class="rounded-circle" style="max-width: 40%; max-height: 40%" alt="Profile Picture">
-                {% endif %}
-                <h2> Привет {{ user.username }}!</h2>
-                <!-- Red Exit Button -->
-                <button onclick="location.href='{% url "logout" %}?next=/notes/home'" class="btn btn-danger position-absolute" style="top: 0; right: 0;">Выйти</button>
-            </div>
+    <div class="row mb-4">
+        <div class="col text-center" style="max-height: 320px; margin-bottom: -160px; z-index: -1;">
+            {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" class="rounded-circle" style="max-width: 150px; max-height: 150px" alt="Profile Picture">
+            {% else %}
+                <img src="https://dummyimage.com/300.png/20f/fff&text={{ user.username }}" class="rounded-circle" style="max-width: 40%; max-height: 40%" alt="Profile Picture">
+            {% endif %}
+            <h2> Привет {{ user.username }}!</h2>
+            <!-- Red Exit Button -->
+            
         </div>
+    </div>
+</div>
         <div id="main-content" class="text-center">
-                <button class="btn btn-primary" style="z-index: 4;" data-toggle="modal" data-target="#addMemoryModal">Добавить воспоминание</button>
-                {% if notes %}
-                    <h1>Ваши впечатления:</h1>
+        <div>
+            <a href="{% url 'notes:create-note' %}" class="btn btn-primary" style="z-index: 4;">Добавить воспоминание</a>
+            <a href="{% url 'logout' %}?next=/" class="btn btn-danger position-absolute" style="top: 25%; right: 20%;">Выйти</a>
+        </div>
+        {% if notes %}
+            <h1>Ваши впечатления:</h1>
+            <div class="container mt-5">
+                <div class="row">
                     {% for note in notes %}
-                        <div class="container mt-5" id="memoryTemplate">
-                            <div class="row my-3">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body" style="text-align: center;">
-                                            <h5 class="card-title memory-title">{{ note.title }}</h5>
-                                            <p class="card-text memory-description">{{ note.description }}</p>
-                                            <p class="card-text memory-address"><strong>Address:</strong> {{ note.location }}</p>
-                                            <p class="card-text memory-date"><strong>Date:</strong> {{ note.date }}</p>
-                                            <p class="card-text memory-id" style="font-size: 11px; color: #BDBDBD"><strong>ID:</strong> {{ note.id }}</p>
-                                            <a href="#" class="btn btn-primary edit-memory-button" data-toggle="modal" data-target="#editMemoryModal">Изменить</a>
-                                        </div>
-                                    </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body" style="text-align: center;">
+                                    <h5 class="card-title memory-title">{{ note.title }}</h5>
+                                    <p class="card-text memory-description">{{ note.description }}</p>
+                                    <p class="card-text memory-address"><strong>Address:</strong> {{ note.location }}</p>
+                                    <p class="card-text memory-date"><strong>Date:</strong> {{ note.date }}</p>
+                                    <p class="card-text memory-id" style="font-size: 11px; color: #BDBDBD"><strong>ID:</strong> {{ note.id }}</p>
+                                    <a href="#" class="btn btn-primary edit-memory-button" data-toggle="modal" data-target="#editMemoryModal">Изменить</a>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-
-                {% else %}
-                    <div style="margin-top: 100px">
-                    <p>У вас нет ни одного воспоминания.</p>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#addMemoryModal">Добавить воспоминание</button>
-                    </div>
-                {% endif %}
-{#            <p>У вас нет ни одного воспоминания</p>#}
-        </div>
+                </div>
+            </div>
+        {% else %}
+            <div style="margin-top: 100px">
+                <p>У вас нет ни одного воспоминания.</p>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addMemoryModal">Добавить воспоминание</button>
+            </div>
+        {% endif %}
+    </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

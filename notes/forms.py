@@ -24,4 +24,4 @@ class RegisterForm(UserCreationForm):
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['title', 'description', 'location', 'date', 'user']
+        fields = ['title', 'description', 'location', 'date']

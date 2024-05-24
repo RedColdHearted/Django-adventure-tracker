@@ -16,9 +16,16 @@ from .forms import NoteForm
 def redirect_to_home_view(request):
     return redirect('notes:home')
 
-
 def home_page_view(request):
     return render(request, 'notes/home_page.html')
+
+def register_page_view(request):
+    return render(request, 'registration/register.html')
+
+@login_required
+def profile_page_view(request):
+    return render(request, 'notes/profile_page.html')
+
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'  # Укажите имя вашего шаблона
@@ -27,24 +34,6 @@ class CustomLoginView(LoginView):
         user = self.request.user
         print(user.pk)
         return reverse('notes:profile', kwargs={'pk': user.pk})
-
-class UserProfileView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'notes/profile_page.html'
-    context_object_name = 'user'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.get_object()
-        context['notes'] = Note.objects.filter(user=user)
-        return context
-
-def register_page_view(request):
-    return render(request, 'registration/register.html')
-
-@login_required
-def profile_page_view(request):
-    return render(request, 'notes/profile_page.html')
 
 class RegisterView(FormView):
     form_class = RegisterForm
@@ -57,17 +46,32 @@ class RegisterView(FormView):
         user.save()
         return super().form_valid(form)
 
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'notes/profile_page.html'
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['notes'] = Note.objects.filter(user=user)
+        return context
+
+#note page views
 class NoteCreateView(FormView):
-    template_name = 'note_form.html'
+    template_name = 'notes/create_form.html'
     form_class = NoteForm
     success_url = reverse_lazy('notes:profile')  # Перенаправление после успешного создания записи
 
     def form_valid(self, form):
-        form.save()
+        note = form.save(commit=False)
+        note.user = self.request.user
+        note.save()
         return super().form_valid(form)
 
 class NoteUpdateView(FormView):
-    template_name = 'note_form.html'
+    template_name = 'notes/edit_form.html'
     form_class = NoteForm
     success_url = reverse_lazy('notes:profile')  # Перенаправление после успешного обновления записи
 

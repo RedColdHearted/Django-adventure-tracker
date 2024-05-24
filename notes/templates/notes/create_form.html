@@ -1,3 +1,6 @@
+{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +19,7 @@
             </div>
             <div class="modal-body">
                 <form method="POST" id="addMemoryForm">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="memoryTitle">Название</label>
                         <input type="text" name="title" class="form-control" id="memoryTitle" placeholder="Введите название">
@@ -30,9 +34,10 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <a href="{% url 'notes:profile' user.id %}"  type="button" class="btn btn-secondary">Отмена</a>
                         <button type="submit" class="btn btn-primary" id="saveMemoryButton">Сохранить</button>
                     </div>
+                    {{ form.errors }}
                 </form>
             </div>
             
