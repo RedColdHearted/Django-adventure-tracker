@@ -29,7 +29,7 @@
                         <label for="memoryTitle">Название</label>
                         <input type="text" name="title" class="form-control" id="memoryTitle" placeholder="Введите название">
                     </div>
-                    {% block map %} 
+                    {% block map %}
                     <div id="map" style="width: 400px; height: 400px"></div>
                     <script>
                         ymaps.ready(init);
@@ -62,7 +62,7 @@
                             });
                         }
                     </script>
-                    
+
                     {% endblock %}
                     <div class="form-group">
                         <label for="memoryDescription">Комментарий</label>

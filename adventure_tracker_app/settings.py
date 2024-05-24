@@ -4,24 +4,22 @@ from pathlib import Path
 from django.urls import reverse_lazy
 
 
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
-    DEBUG=(bool, False),
-    SECRET_KEY=(str, 'unsafe-secret-key'),
-    LANGUAGE_CODE=(str, 'en-us'),
-    TIME_ZONE=(str, 'UTC')
-)
+       DEBUG=(bool, False),
+       SECRET_KEY=(str, 'unsafe-secret-key'),
+   )
 
 env_file = BASE_DIR / '.env'
 if env_file.exists():
     environ.Env.read_env(env_file)
 
-# SECRET_KEY = 'django-insecure-2c(ubr^jlo&=s@a=jxwivc^ynwj(w+(40_0vk849zx(#1e$eed'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-print(SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
 
@@ -39,9 +37,6 @@ INSTALLED_APPS = [
 
     'users',
     'notes',
-
-    # 'django.contrib.sites',
-
 ]
 
 MIDDLEWARE = [
@@ -102,13 +97,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#НЕ МЕНЯТЬ!!! ЛОМАЕТ КАРТЫ!!!
+LANGUAGE_CODE = 'en-us'
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = env('LANGUAGE_CODE')
-
-TIME_ZONE = env('TIME_ZONE')
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -120,9 +112,7 @@ STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 AUTH_USER_MODEL = 'users.User'
 
