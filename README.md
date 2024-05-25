@@ -21,10 +21,11 @@
 1. Клонируйте репозиторий:
 
     git clone https://github.com/RedColdHearted/Django-adventure-tracker
+    <br>
     cd Django-adventure-tracker
     
 
-2. Создайте и активируйте виртуальное окружение:
+3. Создайте и активируйте виртуальное окружение:
 
     
     python3 -m venv venv
