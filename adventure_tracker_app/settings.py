@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'adventure_tracker_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': os.getenv('DATABASE_ENGINE'),
         #'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.getenv('DATABASE_NAME'),
         'USER': os.getenv('DATABASE_USER'),
@@ -73,7 +73,7 @@ DATABASES = {
         'HOST': os.getenv('DATABASE_HOST'),
         'PORT': os.getenv('DATABASE_PORT'),
         'OPTIONS': {
-            'options': '-c client_encoding=utf8'
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
