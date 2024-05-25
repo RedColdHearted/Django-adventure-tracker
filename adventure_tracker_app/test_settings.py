@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'adventure_tracker_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',  # используйте in-memory базу данных SQLite для тестов (быстрее!)
+        'NAME': ':memory:',  # in-memory SQLite для тестов
     }
 }
 
