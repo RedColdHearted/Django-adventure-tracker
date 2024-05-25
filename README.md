@@ -19,26 +19,27 @@
 ### Локальный запуск
 
 1. Клонируйте репозиторий:
-    sh
+
     git clone https://github.com/RedColdHearted/Django-adventure-tracker
-    cd yourrepository
+    cd Django-adventure-tracker
     
 
 2. Создайте и активируйте виртуальное окружение:
-    
-##sh
-    python3 -m venv venv
-    source venv/bin/activate  # Для Windows используйте venvScriptsactivate
-    
 
-3. Установите зависимости:
     
-sh
+    python3 -m venv venv
+    venv/Scripts/activate для windows
+    или source .venv/bin/activate для linux
+
+
+4. Установите зависимости:
+
+    
     pip install -r requirements.txt
     
 
-4. Примените миграции и запустите сервер:
+5. Примените миграции и запустите сервер:
     
-sh
+
     python manage.py migrate
     python manage.py runserver
