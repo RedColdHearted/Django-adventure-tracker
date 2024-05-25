@@ -61,6 +61,12 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'notes/profile/profile_page.html'
     context_object_name = 'user'
+    
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj != self.request.user:
+            raise Http404()
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
