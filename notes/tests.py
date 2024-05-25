@@ -87,10 +87,8 @@ class UserTestCases(TestCase):
         self.client.logout()
 
 class RegisterViewTest(TestCase):
-
     def setUp(self):
-        # Задаем URL для вьюшки
-        self.url = reverse('notes:register')  # не забудьте изменить 'notes:register' на правильный путь вашего URL
+        self.url = reverse('notes:register')
 
     def test_register_view_template(self):
         response = self.client.get(self.url)
