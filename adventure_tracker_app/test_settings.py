@@ -85,7 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#НЕ МЕНЯТЬ!!! ЛОМАЕТ КАРТЫ!!!
+# НЕ МЕНЯТЬ!!! ЛОМАЕТ КАРТЫ!!!
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

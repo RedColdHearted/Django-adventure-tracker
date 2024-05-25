@@ -26,8 +26,6 @@
             {% else %}
                 <img src="https://dummyimage.com/300.png/20f/fff&text={{ user.username }}" class="rounded-circle" style="max-width: 40%; max-height: 40%" alt="Profile Picture">
             {% endif %}
-            
-            <!-- Red Exit Button -->
         </div>
     </div>
 </div>
@@ -52,7 +50,10 @@
                                     <div style="width: 450px; height: 300px; margin: 0 auto; background: #333" id="map{{ note.hash }}"></div>
                                     <p class="card-text memory-date"><strong>Дата:</strong> {{ note.date }}</p>
                                     <p class="card-text memory-id" style="font-size: 11px; color: #BDBDBD"><strong>UUID:</strong> {{ note.id }}</p>
-                                    <a href="{% url 'notes:update-note' note.id %}" class="btn btn-primary edit-memory-button">Изменить</a>
+                                    <div class="d-flex justify-content-center my-3">
+                                        <a href="{% url 'notes:update-note' note.id %}" class="btn btn-primary mx-2">Изменить</a>
+                                        <a href="{% url 'notes:delete-note' note.id %}" class="btn btn-danger mx-2">Удалить</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

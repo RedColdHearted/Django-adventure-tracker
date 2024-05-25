@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, DetailView, UpdateView
 
@@ -23,6 +24,16 @@ def register_page_view(request):
 @login_required
 def profile_page_view(request):
     return render(request, 'notes/profile/profile_page.html')
+
+@login_required
+def delete_note_view(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+
+    if request.user.id != note.user_id:
+        return HttpResponseForbidden("У вас нет разрешения на удаление этой заметки.")
+
+    note.delete()
+    return redirect('notes:login')
 
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
