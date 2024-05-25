@@ -4,6 +4,7 @@ from django.urls import reverse
 from users.models import User
 from .models import Note
 
+
 class BaseTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -19,6 +20,7 @@ class BaseTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], expected_url)
         self.assertRedirects(response, expected_url)
+
 
 class UserTestCases(TestCase):
     def setUp(self):
@@ -85,6 +87,7 @@ class UserTestCases(TestCase):
         response = self.client.get(delete_url_user1_note)
         self.assertEqual(response.status_code, 404)
         self.client.logout()
+
 
 class RegisterViewTest(TestCase):
     def setUp(self):

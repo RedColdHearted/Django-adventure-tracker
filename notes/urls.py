@@ -3,7 +3,11 @@ from .views import (
     home_page_view,
     redirect_to_home_view,
     RegisterView,
-    NoteCreateView, NoteUpdateView, UserProfileView, CustomLoginView, delete_note_view
+    NoteCreateView,
+    NoteUpdateView,
+    UserProfileView,
+    CustomLoginView,
+    delete_note_view,
 )
 
 app_name = 'notes'

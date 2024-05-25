@@ -5,24 +5,27 @@ from django.shortcuts import render, redirect, Http404, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, DetailView, UpdateView
 
-from notes.forms import RegisterForm
+from notes.forms import RegisterForm, NoteCreateForm, NoteUpdtateForm
 from users.models import User
-
 from .models import Note
-from .forms import NoteCreateForm, NoteUpdtateForm
+
 
 def redirect_to_home_view(request):
     return redirect('notes:home')
 
+
 def home_page_view(request):
     return render(request, 'notes/home_page.html')
+
 
 def register_page_view(request):
     return render(request, 'registration/register.html')
 
+
 @login_required
 def profile_page_view(request):
     return render(request, 'notes/profile/profile_page.html')
+
 
 @login_required
 def delete_note_view(request, uuid):
@@ -32,12 +35,15 @@ def delete_note_view(request, uuid):
     note.delete()
     return redirect('notes:login')
 
+
 class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
     redirect_authenticated_user = True
+
     def get_success_url(self):
         user = self.request.user
         return reverse('notes:profile', kwargs={'pk': user.pk})
+
 
 class RegisterView(FormView):
     form_class = RegisterForm
@@ -50,6 +56,7 @@ class RegisterView(FormView):
         user.save()
         return super().form_valid(form)
 
+
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'notes/profile/profile_page.html'
@@ -59,15 +66,15 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context['notes'] = Note.objects.filter(user=user)
-        for i in range(len(context['notes'])):
-            x, y = context['notes'][i].location.split(',')
+        for note in context['notes']:
+            x, y = note.location.split(',')
             x, y = float(x.lstrip('[')), float(y.rstrip(']'))
-            context['notes'][i].x = x
-            context['notes'][i].y = y
-            context['notes'][i].hash = hash((x, y)) % 1000
+            note.x = x
+            note.y = y
+            note.hash = hash((x, y)) % 1000
         return context
 
-#note page views
+
 class NoteCreateView(FormView):
     template_name = 'notes/forms/create_form.html'
     form_class = NoteCreateForm
