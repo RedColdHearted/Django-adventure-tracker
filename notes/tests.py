@@ -31,14 +31,6 @@ class UserTestCases(TestCase):
             username='testuser2', password='password'
         )
         self.profile_url = reverse('notes:profile', kwargs={'pk': self.user1.pk})
-    def test_view_accessible_if_logged_in(self):
-        self.client.login(username='testuser1', password='password')
-        response = self.client.get(self.profile_url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_can_user_get_others_note(self):
-        #test 1
-        self.client.login(username=self.user1.username, password='password')
 
         self.user1_note = Note.objects.create(title='test1',
                                               location='[50, 50]',
@@ -48,19 +40,52 @@ class UserTestCases(TestCase):
                                               location='[50, 50]',
                                               description='some description',
                                               user=self.user2)
+    def test_view_accessible_if_logged_in(self):
+        self.client.login(username='testuser1', password='password')
+        response = self.client.get(self.profile_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_can_user_get_others_note(self):
+        # test 1
+        self.client.login(username=self.user1.username, password='password')
 
         update_url_user2_note = reverse('notes:update-note', kwargs={'uuid': self.user2_note.pk})
         response = self.client.get(update_url_user2_note)
         self.assertEqual(response.status_code, 404)
         self.client.logout()
 
-        #test 2
+        # test 2
         self.client.login(username=self.user2.username, password='password')
-        update_url_user2_note = reverse('notes:update-note', kwargs={'uuid': self.user1_note.pk})
-        response = self.client.get(update_url_user2_note)
+        update_url_user1_note = reverse('notes:update-note', kwargs={'uuid': self.user1_note.pk})
+        response = self.client.get(update_url_user1_note)
         self.assertEqual(response.status_code, 404)
         self.client.logout()
 
+    def test_can_user_delete_note(self):
+        self.client.login(username=self.user1.username, password='password')
+        self.user1_note = Note.objects.create(title='test1',
+                                              location='[50, 50]',
+                                              description='test1',
+                                              user=self.user1)
+        delete_url = reverse('notes:delete-note', kwargs={'uuid': self.user1_note.id})
+        response = self.client.get(delete_url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_can_user_delete_others_note(self):
+        # test 1
+        self.client.login(username=self.user1.username, password='password')
+
+        delete_url_user2_note = reverse('notes:delete-note', kwargs={'uuid': self.user2_note.pk})
+        response = self.client.get(delete_url_user2_note)
+        self.assertEqual(response.status_code, 404)
+        self.client.logout()
+
+        # test 2
+        self.client.login(username=self.user2.username, password='password')
+        delete_url_user1_note = reverse('notes:delete-note', kwargs={'uuid': self.user1_note.pk})
+        response = self.client.get(delete_url_user1_note)
+        self.assertEqual(response.status_code, 404)
+        self.client.logout()
 class RegisterViewTest(TestCase):
 
     def setUp(self):
