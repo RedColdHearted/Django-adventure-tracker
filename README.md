@@ -44,3 +44,5 @@
 
     python manage.py migrate
     python manage.py runserver
+
+6. Так же добавьте свои переменные окружение в .env
