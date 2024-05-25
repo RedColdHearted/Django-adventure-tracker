@@ -19,4 +19,26 @@
 ### Локальный запуск
 
 1. Клонируйте репозиторий:
+    sh
+    git clone https://github.com/yourusername/yourrepository.git
+    cd yourrepository
     
+
+2. Создайте и активируйте виртуальное окружение:
+    
+sh
+    python3 -m venv venv
+    source venv/bin/activate  # Для Windows используйте venvScriptsactivate
+    
+
+3. Установите зависимости:
+    
+sh
+    pip install -r requirements.txt
+    
+
+4. Примените миграции и запустите сервер:
+    
+sh
+    python manage.py migrate
+    python manage.py runserver
