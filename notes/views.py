@@ -61,7 +61,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'notes/profile/profile_page.html'
     context_object_name = 'user'
-    
+
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj != self.request.user:
