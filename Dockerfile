@@ -1,8 +1,15 @@
 # Используем базовый образ python
-FROM python:3.12
+FROM python:3.12.2-slim
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
+
+# Устанавливаем системные зависимости
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    build-essential \
+    && apt-get clean
 
 # Копируем файл зависимостей в рабочую директорию
 COPY requirements.txt /app/
