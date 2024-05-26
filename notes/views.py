@@ -15,7 +15,7 @@ def redirect_to_home_view(request):
 
 
 def home_page_view(request):
-    return render(request, 'notes/home_page.html')
+    return render(request, 'notes/templates/home/home_page.html')
 
 
 def register_page_view(request):
@@ -24,7 +24,7 @@ def register_page_view(request):
 
 @login_required
 def profile_page_view(request):
-    return render(request, 'notes/profile/profile_page.html')
+    return render(request, 'notes/profile/templates/notes/profile_page.html')
 
 
 @login_required
@@ -59,7 +59,7 @@ class RegisterView(FormView):
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = 'notes/profile/profile_page.html'
+    template_name = 'notes/profile/templates/notes/profile_page.html'
     context_object_name = 'user'
 
     def get_object(self, queryset=None):
