@@ -69,7 +69,7 @@ DATABASES = {
         #'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.getenv('DATABASE_NAME', 'trackerDB'),
         'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'maxim2005'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
         'HOST': os.getenv('DOCKER_DATABASE_HOST', os.getenv('DATABASE_HOST', 'localhost')),
         'PORT': os.getenv('DATABASE_PORT', '5432'),
         'OPTIONS': {
