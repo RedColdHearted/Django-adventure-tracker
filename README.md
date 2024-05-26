@@ -49,5 +49,5 @@
 
 # Используемое ПО 
    
-   - [wait-for-it.sh](https://github.com/vishnubob/wait-for-it) - используемое по лицензии MIT.
+   - [wait-for-it.sh](https://github.com/vishnubob/wait-for-it)
 
