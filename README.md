@@ -10,7 +10,7 @@
 - ✔️ Сконфигурированы правила для линтеров
 - ✔️ Настроен Dockerfile
 - ✔️ Настроен docker-compose вместе с PostgreSQL
-- ✔️ Приложение запущено на [https://k3ntik.pythonanywhere.com/](https://k3ntik.pythonanywhere.com/) (могут не работать изображения из-за возможной перегрузки сервера)
+- ✔️ Приложение запущено на [https://k3ntik.pythonanywhere.com/](https://k3ntik.pythonanywhere.com/) (БД - MySQL)
 
 *Важно:* Авторизация через ВКонтакте не настроена из-за изменений в сервисе авторизации. Вместо этого используется стандартная авторизация Django.
 
