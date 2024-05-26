@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '.github/*'
+      - 'notes/*'
+      - 'users/*'
+      - 'adventure_tracker_app/*'
+      - '.env'
+      - '.flake8'
+      - 'requirements.txt'
   pull_request:
     branches:
       - main
