@@ -65,14 +65,16 @@ WSGI_APPLICATION = 'adventure_tracker_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DATABASE_ENGINE'),
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql'),
         #'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'),
-        'PORT': os.getenv('DATABASE_PORT')
-
+        'NAME': os.getenv('DATABASE_NAME', 'trackerDB'),
+        'USER': os.getenv('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'maxim2005'),
+        'HOST': os.getenv('DOCKER_DATABASE_HOST', os.getenv('DATABASE_HOST', 'localhost')),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
+        'OPTIONS': {
+            'options': os.getenv('DATABASE_OPTIONS', '-c client_encoding=utf8')
+        }
     }
 }
 
