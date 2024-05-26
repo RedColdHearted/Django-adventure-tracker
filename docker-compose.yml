@@ -2,11 +2,9 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:13
+    image: postgres:13-alpine
     env_file:
       - .env
-    environment:
-      - eed=${eed:-default_value}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -16,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --nothreading --noreload"
+    command: bash -c "./wait-for-it.sh db:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --nothreading --noreload"
     volumes:
       - .:/app
     ports:
@@ -27,8 +25,6 @@ services:
       - db
     networks:
       - django_network
-    environment:
-      - eed=${eed:-default_value}
 
 volumes:
   postgres_data:
