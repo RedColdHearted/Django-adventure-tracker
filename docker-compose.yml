@@ -10,11 +10,25 @@ services:
     networks:
       - django_network
 
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "./wait-for-it.sh db:5432 --timeout=60 --strict -- python manage.py makemigrations && python manage.py migrate users && python manage.py migrate notes"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - django_network
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "./wait-for-it.sh db:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --nothreading --noreload"
+    command: bash -c "./wait-for-it.sh db:5432 --timeout=60 --strict -- python manage.py runserver 0.0.0.0:8000 --nothreading --noreload"
     volumes:
       - .:/app
     ports:
@@ -23,6 +37,7 @@ services:
       - .env
     depends_on:
       - db
+      - migrate
     networks:
       - django_network
 
