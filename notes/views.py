@@ -24,7 +24,7 @@ def register_page_view(request):
 
 @login_required
 def profile_page_view(request):
-    return render(request, 'notes/profile/profile_page.html')
+    return render(request, 'profile/profile_page.html')
 
 
 @login_required
@@ -59,7 +59,7 @@ class RegisterView(FormView):
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = 'notes/profile/profile_page.html'
+    template_name = 'profile/profile_page.html'
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
@@ -76,7 +76,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
 
 class NoteCreateView(FormView):
-    template_name = 'notes/forms/create_form.html'
+    template_name = 'forms/create_form.html'
     form_class = NoteCreateForm
     success_url = reverse_lazy('notes:login')
 
@@ -90,7 +90,7 @@ class NoteCreateView(FormView):
 class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Note
     form_class = NoteUpdtateForm
-    template_name = 'notes/forms/edit_form.html'
+    template_name = 'forms/edit_form.html'
     success_url = reverse_lazy('notes:login')
     pk_url_kwarg = 'uuid'
 
